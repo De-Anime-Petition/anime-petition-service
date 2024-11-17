@@ -8,23 +8,21 @@ type Message struct {
 	Domain    string `json:"domain"`
 	Address   string `json:"address"`
 	Statement string `json:"statement"`
-	Uri       string `json:"uri"`
-	Version   string `json:"version"`
-	ChainId   int    `json:"chainId"`
+	Type      string `json:"type"`
+	ChainId   string `json:"chainId"`
 	Nonce     string `json:"nonce"`
-	IssuedAt  string `json:"issuedAt"`
+	Timestamp string `json:"timestamp"`
 }
 
 type UserLoginReq struct {
-	g.Meta    `path:"/user/login" tags:"User" method:"get" x-group:"user" summary:"用户登陆"`
-	Username  string  `json:"username" v:"required|length:42,42#Please Input Wallet Address" dc:"用户名,钱包地址"`
-	Message   Message `json:"message" dc:"签名信息"`
-	Signature string  `json:"signature" dc:"签名数组"`
+	g.Meta    `path:"/user/login" tags:"User" method:"post" x-group:"user" summary:"用户登陆"`
+	Message   Message `json:"message" v:"required#Please Input messages" dc:"签名信息原文"`
+	Signature string  `json:"signature" v:"required#Please Input signature" dc:"签名数据"`
 }
 
 type UserLoginRes struct {
-	Token string `json:"token" dc:"Jwt token: "`
-	// Expire string `json:"expire" dc:"TOKEN"`
+	Message string `json:"message" dc:"提示信息"`
+	Token   string `json:"token" dc:"uuid token"`
 }
 
 type UserLogoutReq struct {
@@ -35,4 +33,14 @@ type UserLogoutReq struct {
 }
 
 type UserLogoutRes struct {
+	Message string `json:"message" dc:"提示信息"`
+}
+
+type ActiveUserInfoReq struct {
+	g.Meta `path:"/user/active_users_info" tags:"User" method:"get" x-group:"user" summary:"查看站点的活跃度"`
+}
+
+type ActiveUserInfoRes struct {
+	Message    string `json:"message" dc:"提示信息"`
+	TotalUsers int    `json:"total_users" dc:"登录过该站点的用户数量"`
 }

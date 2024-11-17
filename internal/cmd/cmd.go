@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"anime_petition/internal/controller"
 	"context"
 
 	"github.com/gogf/gf/os/gctx"
@@ -26,9 +27,10 @@ var (
 		Brief: "start http server",
 		Func: func(ctx context.Context, parser *gcmd.Parser) (err error) {
 			s := g.Server()
+			s.BindMiddlewareDefault(Middleware)
 			s.Group("/", func(group *ghttp.RouterGroup) {
 				group.Middleware(ghttp.MiddlewareHandlerResponse)
-				group.Bind(controller.user)
+				group.Bind(controller.User)
 			})
 			s.Run()
 			return nil

@@ -62,11 +62,11 @@ token：用户登录后获取的token
 ```
 
 ### debug
-curl -v -l -H "Content-type: application/json" -X POST -d '{"message":{"domain":"127.0.0.1","address":"0x5639Bc2D96c7bA37EECA625599B183241A2bBE6c","chainId":"59144","nonce":"69694253","timestamp":"1731825448","statement":"Sign in to Anime Petition", "type": "login"},"signature":"0xc43b720062b2db3b20204ddb07ecdfc384e7814d31b7351256f4261c7d311eec7588aaa708ae5cc80e9c024b9ace24b522f9f90e6675e0455fc1c96c6efa37e51c"}' http://127.0.0.1:8000/user/login
+curl -v -l -H "Content-type: application/json" -X POST -d '{"message":{"domain":"127.0.0.1","address":"0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266","chainId":"59144","nonce":"69694253","timestamp":"1731825448","statement":"Sign in to Anime Petition", "type": "login"},"signature":"0xc43b720062b2db3b20204ddb07ecdfc384e7814d31b7351256f4261c7d311eec7588aaa708ae5cc80e9c024b9ace24b522f9f90e6675e0455fc1c96c6efa37e51c"}' http://127.0.0.1:8000/user/login
 
 ethereum.enable()
-account = "0x5639Bc2D96c7bA37EECA625599B183241A2bBE6c"
-message = "127.0.0.10x5639Bc2D96c7bA37EECA625599B183241A2bBE6cSign in to Anime Petitionlogin59144696942531731825448"
+account = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"
+message = "127.0.0.10xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266Sign in to Anime Petitionlogin59144696942531731825448"
 ethereum.request({method: "personal_sign", params: [account, message]})
 0xc43b720062b2db3b20204ddb07ecdfc384e7814d31b7351256f4261c7d311eec7588aaa708ae5cc80e9c024b9ace24b522f9f90e6675e0455fc1c96c6efa37e51c
 
@@ -100,3 +100,14 @@ total_users：当前登录过动漫请愿的用户数量
 ## 以下数据，前端直接调用合约的接口获取
 petition_nums：当前请愿次数，表示用户发起的请愿数量总量
 某个nft 的 petition_nums：当前该NFT的请愿次数
+
+
+## 服务器配置
+安装 nginx 服务器后
+调整 /etc/nginx/conf.d/default.conf 文件，新增以下配置
+location ~ ^/(user|swagger|api.json) {
+    proxy_pass http://127.0.0.1:8000;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+}

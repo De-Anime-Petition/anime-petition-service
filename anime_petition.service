@@ -1,0 +1,20 @@
+[Unit]
+# /etc/systemd/system/anime_petition.service
+Description=Anime Petition Service
+After=network.target
+
+[Service]
+# 设置工作目录
+WorkingDirectory=/home/anime-petition-service
+
+# 指定可执行文件路径
+ExecStart=/bin/bash -c "/home/anime-petition-service/anime_petition >> /var/log/anime_petition.log 2>&1"
+ExecReload=/bin/sh -c "/bin/kill -9 $(pidof anime_petition)" && /home/anime-petition-service/anime_petition
+ExecStop=/bin/sh -c "/bin/kill -9 $(pidof anime_petition)"
+
+
+# 启动后重启策略（可选）
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

@@ -62,13 +62,15 @@ token：用户登录后获取的token
 ```
 
 ### debug
-curl -v -l -H "Content-type: application/json" -X POST -d '{"message":{"domain":"127.0.0.1","address":"0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266","chainId":"59144","nonce":"69694253","timestamp":"1731825448","statement":"Sign in to Anime Petition", "type": "login"},"signature":"0xc43b720062b2db3b20204ddb07ecdfc384e7814d31b7351256f4261c7d311eec7588aaa708ae5cc80e9c024b9ace24b522f9f90e6675e0455fc1c96c6efa37e51c"}' http://127.0.0.1:8000/user/login
+curl -v -l -H "Content-type: application/json" -X POST -d '{"message":{"domain":"127.0.0.1","address":"0x5639Bc2D96c7bA37EECA625599B183241A2bBE6c","chainId":"59144","nonce":"69694253","timestamp":"1731825448","statement":"Sign in to Anime Petition", "type": "login"},"signature":"0xc43b720062b2db3b20204ddb07ecdfc384e7814d31b7351256f4261c7d311eec7588aaa708ae5cc80e9c024b9ace24b522f9f90e6675e0455fc1c96c6efa37e51c"}' http://127.0.0.1:8000/user/login
 
 ethereum.enable()
-account = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"
-message = "127.0.0.10xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266Sign in to Anime Petitionlogin59144696942531731825448"
+account = "0x5639Bc2D96c7bA37EECA625599B183241A2bBE6c"
+message = "127.0.0.10x5639Bc2D96c7bA37EECA625599B183241A2bBE6cSign in to Anime Petitionlogin59144696942531731825448"
 ethereum.request({method: "personal_sign", params: [account, message]})
 0xc43b720062b2db3b20204ddb07ecdfc384e7814d31b7351256f4261c7d311eec7588aaa708ae5cc80e9c024b9ace24b522f9f90e6675e0455fc1c96c6efa37e51c
+
+curl -v -l -H "Content-type: application/json" -X POST -d '{"user":"0x5639Bc2D96c7bA37EECA625599B183241A2bBE6c", "token": "396cddf1-1f94-408a-8fc1-40b8d809953c"}' http://127.0.0.1:8000/user/logout
 
 ## 用户注销
 ```

@@ -5,19 +5,19 @@ import (
 )
 
 type Message struct {
-	Domain    string `json:"domain"`
-	Address   string `json:"address"`
-	Statement string `json:"statement"`
-	Type      string `json:"type"`
-	ChainId   string `json:"chainId"`
-	Nonce     string `json:"nonce"`
-	Timestamp string `json:"timestamp"`
+	Domain    string `p:"domain"`
+	Address   string `p:"address"`
+	Statement string `p:"statement"`
+	Type      string `p:"type"`
+	ChainId   string `p:"chainId"`
+	Nonce     string `p:"nonce"`
+	Timestamp string `p:"timestamp"`
 }
 
 type UserLoginReq struct {
 	g.Meta    `path:"/user/login" tags:"User" method:"post" x-group:"user" summary:"用户登陆"`
-	Message   Message `json:"message" v:"required#Please Input messages" dc:"签名信息原文"`
-	Signature string  `json:"signature" v:"required#Please Input signature" dc:"签名数据"`
+	Message   Message `p:"message" v:"required#Please Input messages" dc:"签名信息原文"`
+	Signature string  `p:"signature" v:"required#Please Input signature" dc:"签名数据"`
 }
 
 type UserLoginRes struct {
